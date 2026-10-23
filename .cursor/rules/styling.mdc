@@ -1,0 +1,36 @@
+---
+description: Tailwind vs SCSS modules, px, медиазапросы в конце файла
+globs: src/**/*.{tsx,scss,css}
+alwaysApply: true
+---
+
+# Styling
+
+- **Tailwind** — layout/spacing, если в одном `className` **не больше 5** утилит.
+- Если в одном `className` **больше 5** классов — выноси **только этот** `className` в `*.module.scss` рядом с компонентом (папка `component/component.tsx` + `component.module.scss`).
+- **Исключение:** `shared/ui` — любое число Tailwind-классов.
+- В SCSS и в **произвольных** Tailwind-значениях — **px**, не `em`/`rem` (`tracking-[-0.16px]`, `min-h-[calc(100svh-48px)]`). Шкала Tailwind (`p-6`, `text-base`, `gap-4`) — ок. Цвета — CSS-переменные (`var(--gray-100)`).
+- Медиазапросы **только в конце файла**, группами по брейкпоинту. Не вкладывай `@media` внутрь класса:
+
+```scss
+.panel {
+  display: flex;
+  padding: 40px 24px;
+  border-radius: 28px;
+}
+
+@media (width < 1024px) {
+  .panel {
+    border-radius: 0;
+  }
+}
+
+@media (width < 640px) {
+  .panel {
+    padding: 32px 16px;
+  }
+}
+```
+
+- Текст — `Typography`. UI-примитивы — CVA в `shared/ui`. Иконки — Lucide или SVGR `*Icon`.
+- Классы склеивай через `cn(...)`.
